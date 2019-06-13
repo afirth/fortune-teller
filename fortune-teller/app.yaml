@@ -9,6 +9,9 @@ spec:
       containers:
       - name: fortune-app
         image: quay.io/kubernetes-ingress-controller/grpc-fortune-teller:0.1
+        env:
+          - name: GODEBUG
+            value: http2debug=2
         ports:
         - containerPort: 50051
           name: grpc
