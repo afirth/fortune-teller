@@ -3,7 +3,9 @@ kind: Ingress
 metadata:
   annotations:
     kubernetes.io/ingress.class: "grpc"
+    certmanager.k8s.io/cluster-issuer: letsencrypt-prod-cluster
     nginx.ingress.kubernetes.io/backend-protocol: "GRPC"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
     nginx.ingress.kubernetes.io/configuration-snippet: |
       proxy_set_header l5d-dst-override $service_name.$namespace.svc.cluster.local:50051;
       proxy_hide_header l5d-remote-ip;
@@ -17,3 +19,7 @@ spec:
       - backend:
           serviceName: fortune-service
           servicePort: grpc
+  tls:
+  - hosts:
+    - fortune-teller.tree.outstandingwombat.com
+    secretName: fortune-teller.tree.outstandingwombat.com-tls

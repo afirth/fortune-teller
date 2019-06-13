@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 set -eux -o pipefail
 
-grpcurl -plaintext fortune-teller.tree.outstandingwombat.com:80 build.stack.fortune.FortuneTeller/Predict
+grpcurl -insecure fortune-teller.tree.outstandingwombat.com:443 build.stack.fortune.FortuneTeller/Predict
