@@ -1,0 +1,14 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: fortune-app
+spec:
+  replicas: 1
+  template:
+    spec:
+      containers:
+      - name: fortune-app
+        image: quay.io/kubernetes-ingress-controller/grpc-fortune:0.1
+        ports:
+        - containerPort: 50051
+          name: grpc

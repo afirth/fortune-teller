@@ -1,0 +1,15 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: "grpc"
+    nginx.ingress.kubernetes.io/backend-protocol: "GRPC"
+  name: fortune-ingress
+spec:
+  rules:
+  - host: fortune-teller.tree.outstandingwombat.com
+    http:
+      paths:
+      - backend:
+          serviceName: fortune-service
+          servicePort: grpc
