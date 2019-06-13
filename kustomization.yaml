@@ -9,7 +9,6 @@ commonLabels:
 
 resources:
 - fortune-teller/app.yaml
-- fortune-teller/cert.yaml
 - fortune-teller/ingress.yaml
 - fortune-teller/namespace.yaml
 - fortune-teller/svc.yaml

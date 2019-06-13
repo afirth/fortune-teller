@@ -8,7 +8,7 @@ spec:
     spec:
       containers:
       - name: fortune-app
-        image: quay.io/kubernetes-ingress-controller/grpc-fortune:0.1
+        image: quay.io/kubernetes-ingress-controller/grpc-fortune-teller:0.1
         ports:
         - containerPort: 50051
           name: grpc
