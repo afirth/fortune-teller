@@ -5,9 +5,11 @@ SHELL = /bin/bash
 
 export GCLOUD_PROJECT := $(shell gcloud config get-value project 2>/dev/null)
 
-# templates = kustomization.yaml
+#templates = kustomization.yaml
 manifest = ./generated/manifest.yaml
 
+linkerd_args += --proxy-image=gcr.io/linkerd-io/proxy:ver-protocol-error-fix-0
+linkerd_args += --proxy-log-level=warn,linkerd2_proxy=info,h2=debug
 
 #runs kustomize to make one big yaml manifest
 .PHONY: all
@@ -36,13 +38,16 @@ skaffold: $(templates) $(targets)
 	skaffold run
 
 #calls envsubst to replace things like GCLOUD_PROJECT
+.PHONY: $(templates)
 $(templates): %.yaml: %.yaml.tmpl
 	envsubst < $^ > $@
 
 .PHONY: linkerd-inject
 linkerd-inject:
-	linkerd inject $(manifest) | kubectl apply -f -
+	linkerd inject $(linkerd_args) $(manifest) > $(manifest).swp \
+		&& mv $(manifest).swp $(manifest)
 
 .PHONY: linkerd-uninject
 linkerd-uninject:
-	linkerd uninject $(manifest) | kubectl apply -f -
+	linkerd uninject $(linkerd_args) $(manifest) > $(manifest).swp \
+		&& mv $(manifest).swp $(manifest)
