@@ -37,8 +37,8 @@ spec:
   template:
     metadata:
       annotations:
-        config.linkerd.io/proxy-log-level: warn,linkerd2_proxy=info,h2=debug
-        config.linkerd.io/proxy-version: ver-protocol-error-fix-0
+        config.linkerd.io/proxy-log-level: warn,linkerd2_proxy=info,h2=trace
+        config.linkerd.io/proxy-version: ver-protocol-error-fix-1
         linkerd.io/inject: enabled
       creationTimestamp: null
       labels:
@@ -64,9 +64,9 @@ metadata:
     kubernetes.io/ingress.class: grpc
     nginx.ingress.kubernetes.io/backend-protocol: GRPC
     nginx.ingress.kubernetes.io/configuration-snippet: |
-      proxy_set_header l5d-dst-override $service_name.$namespace.svc.cluster.local:50051;
-      proxy_hide_header l5d-remote-ip;
-      proxy_hide_header l5d-server-id;
+      grpc_set_header l5d-dst-override $service_name.$namespace.svc.cluster.local:50051;
+      grpc_hide_header l5d-remote-ip;
+      grpc_hide_header l5d-server-id;
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
   labels:
     app.kubernetes.io/app: fortune-teller

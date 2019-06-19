@@ -7,9 +7,9 @@ metadata:
     nginx.ingress.kubernetes.io/backend-protocol: "GRPC"
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
     nginx.ingress.kubernetes.io/configuration-snippet: |
-      proxy_set_header l5d-dst-override $service_name.$namespace.svc.cluster.local:50051;
-      proxy_hide_header l5d-remote-ip;
-      proxy_hide_header l5d-server-id;
+      grpc_set_header l5d-dst-override $service_name.$namespace.svc.cluster.local:50051;
+      grpc_hide_header l5d-remote-ip;
+      grpc_hide_header l5d-server-id;
   name: fortune-ingress
 spec:
   rules:
